@@ -76,6 +76,7 @@ def setTemp(gotJson):
     return response
 
 def startTimer(delay):
+    global airOffIn
     airOffIn = 0
     availLi = ['3초', '1분', '30분', '1시간 30분','2시간','2시간 30분','3시간','3시간 30분','4시간','4시간 30분','5시간']
     if delay.encode('utf-8') not in availLi :
