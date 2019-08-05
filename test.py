@@ -123,6 +123,7 @@ def myTimer(delay):
             timer = timer - 1
             time.sleep(1)
     timer = -1
+    isTimerOn = False
 
 @app.route('/air', methods=['POST'])
 def air():
