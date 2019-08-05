@@ -70,8 +70,8 @@ def startTimer(delay):
     if delay.encode('utf-8') not in availLi :
         return "예약 가능한 시간이 아닙니다."
     else :
-        airOffIn = -1
-        t = threading.Thread(target=myTimer, args=(delay,))
+        if airOffIn > 0 :
+            t = threading.Thread(target=myTimer, args=(delay,))
         t.start()
         return "{}뒤에 에어컨을 끕니다.".format(delay.encode('utf-8'))
 
