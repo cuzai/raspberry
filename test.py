@@ -7,19 +7,19 @@ import time
 app = Flask(__name__)
 cur_temp = 26
 fan = 1
-timer = 0
+airOffIn = 0
 isTimerOn = False
 
 def get_temp(temp, fan):
     os.system('sudo python /home/pi/Desktop/iot/irrp.py -p -g14 -f/home/pi/Desktop/iot/codes {}-{}'.format(temp, fan))
 
 def timerDetector():
-    global timer
+    global airOffIn
     while True:
-        if timer == -1:
+        if airOffIn == -1:
             get_temp('off', 1)
             print('air should be off')
-            timer = 0
+            airOffIn = 0
 
 detectThread = threading.Thread(target=timerDetector)
 detectThread.start()
@@ -40,7 +40,7 @@ def results():
 def setTemp(gotJson):
     global cur_temp
     global fan
-    global timer
+    global airOffIn
     global isTimerOn
     if gotJson.get('onOff') != '' and gotJson.get('onOff') != None:
         if gotJson.get('onOff') == 'on':
@@ -80,49 +80,49 @@ def setTemp(gotJson):
 def startTimer(delay):
     global  isTimerOn
     isTimerOn = False
-    t = threading.Thread(target=myTimer, args=(delay,))
-    t.start()
     availLi = ['3초', '1분', '30분', '1시간 30분','2시간','2시간 30분','3시간','3시간 30분','4시간','4시간 30분','5시간']
     if delay.encode('utf-8') not in availLi :
         return "예약 가능한 시간이 아닙니다."
     else :
         isTimerOn = True
+        t = threading.Thread(target=myTimer, args=(delay,))
+        t.start()
         return "{}뒤에 에어컨을 끕니다.".format(delay.encode('utf-8'))
 
 
 def myTimer(delay):
-    global timer
+    global airOffIn
     global isTimerOn
     delay = delay.encode('utf-8')
     if delay == '3초':
-        timer = 3
+        airOffIn = 3
     elif delay == '1분':
-        timer = 1 * 60
+        airOffIn = 1 * 60
     elif delay == '30분' :
-        timer = 30 * 60
+        airOffIn = 30 * 60
     elif delay == '1시간 30분':
-        timer = (1 * 60 * 60) + (30 * 60)
+        airOffIn = (1 * 60 * 60) + (30 * 60)
     elif delay == '2시간':
-        timer = (2 * 60 * 60)
+        airOffIn = (2 * 60 * 60)
     elif delay == '2시간 30분':
-        timer = (2 * 60 * 60) + (30 * 60)
+        airOffIn = (2 * 60 * 60) + (30 * 60)
     elif delay == '3시간':
-        timer = (3 * 60 * 60)
+        airOffIn = (3 * 60 * 60)
     elif delay == '3시간 30분':
-        timer = (3 * 60 * 60) + (30 * 60)
+        airOffIn = (3 * 60 * 60) + (30 * 60)
     elif delay == '4시간':
-        timer = (4 * 60 * 60)
+        airOffIn = (4 * 60 * 60)
     elif delay == '4시간 30분':
-        timer = (4 * 60 * 60) + (30 * 60)
+        airOffIn = (4 * 60 * 60) + (30 * 60)
     elif delay == '5시간':
-        timer = (5 * 60 * 60)
+        airOffIn = (5 * 60 * 60)
 
-    for i in range(timer):
+    for i in range(airOffIn):
         if isTimerOn == True:
-            print(delay.encode('utf-8'), timer)
-            timer = timer - 1
+            print(delay.encode('utf-8'), airOffIn)
+            airOffIn = airOffIn - 1
             time.sleep(1)
-    timer = -1
+    airOffIn = -1
     isTimerOn = False
 
 @app.route('/air', methods=['POST'])
