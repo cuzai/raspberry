@@ -97,12 +97,14 @@ def startTimer(delay):
         elif delay == '5시간':
             airOffIn = (5 * 60 * 60)
         t_stop.set()
+        t = threading.Thread(target=myTimer, args=(1, t_stop))
         t.start()
         return "{}뒤에 에어컨을 끕니다.".format(delay)
 
 def myTimer(arg1, stop_event):
     print('in Thread')
     global airOffIn
+    print(airOffIn)
     global delay
     for i in range(airOffIn):
         while not stop_event.is_set() :
