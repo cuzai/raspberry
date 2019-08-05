@@ -94,16 +94,17 @@ def startTimer(delay):
             airOffIn = (4 * 60 * 60) + (30 * 60)
         elif delay == '5시간':
             airOffIn = (5 * 60 * 60)
+        t_stop.set()
         return "{}뒤에 에어컨을 끕니다.".format(delay)
 
-def myTimer():
+def myTimer(stop_event):
     global airOffIn
     global delay
     for i in range(airOffIn):
-        while True :
+        while not stop_event.is_set() :
             print('{} : {}'.format(delay, airOffIn))
             airOffIn = airOffIn - 1
-            time.sleep(1)
+            stop_event.wait(1)
             if airOffIn == 0 :
                 get_temp('off', 1)
                 print('air should be off')
@@ -114,7 +115,7 @@ def air():
     return make_response(jsonify({'fulfillmentText': response}))
 
 t_stop = threading.Event()
-t = threading.Thread(target=myTimer)
+t = threading.Thread(target=myTimer, args=(t_stop, ))
 t.start()
 
 if __name__ == '__main__':
