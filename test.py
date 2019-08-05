@@ -77,6 +77,7 @@ def startTimer(delay):
     #     return "이미 예약이 되어 있습니다. 다시 예약하려면 에어컨을 음성으로 껐다가 켜주세요"
     else :
         airOffIn = 0
+        time.sleep(1)
         if delay == '3초':
             airOffIn = 3
         elif delay == '1분':
