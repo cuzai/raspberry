@@ -8,7 +8,6 @@ app = Flask(__name__)
 cur_temp = 26
 fan = 1
 airOffIn = 0
-isTimerOn = False
 
 def get_temp(temp, fan):
     os.system('sudo python /home/pi/Desktop/iot/irrp.py -p -g14 -f/home/pi/Desktop/iot/codes {}-{}'.format(temp, fan))
@@ -41,7 +40,6 @@ def setTemp(gotJson):
     global cur_temp
     global fan
     global airOffIn
-    global isTimerOn
     if gotJson.get('onOff') != '' and gotJson.get('onOff') != None:
         if gotJson.get('onOff') == 'on':
             cur_temp = 26
@@ -49,7 +47,7 @@ def setTemp(gotJson):
             response = "네, 에어컨을 기본 설정인 {}도, 바람 세기 {}로 켭니다옹".format(cur_temp, fan)
         else:
             cur_temp = 'off'
-            isTimerOn = False
+            airOffIn = 0
             response = "에어컨을 끕니다옹"
     elif gotJson.get('curTemp') != '' and gotJson.get('curTemp') != None:
         if cur_temp == 'off':
@@ -78,13 +76,11 @@ def setTemp(gotJson):
     return response
 
 def startTimer(delay):
-    global  isTimerOn
-    isTimerOn = False
+    airOffIn = 0
     availLi = ['3초', '1분', '30분', '1시간 30분','2시간','2시간 30분','3시간','3시간 30분','4시간','4시간 30분','5시간']
     if delay.encode('utf-8') not in availLi :
         return "예약 가능한 시간이 아닙니다."
     else :
-        isTimerOn = True
         t = threading.Thread(target=myTimer, args=(delay,))
         t.start()
         return "{}뒤에 에어컨을 끕니다.".format(delay.encode('utf-8'))
@@ -92,7 +88,6 @@ def startTimer(delay):
 
 def myTimer(delay):
     global airOffIn
-    global isTimerOn
     delay = delay.encode('utf-8')
     if delay == '3초':
         airOffIn = 3
@@ -118,12 +113,10 @@ def myTimer(delay):
         airOffIn = (5 * 60 * 60)
 
     for i in range(airOffIn):
-        if isTimerOn == True:
-            print('{} : {}'.format(delay, airOffIn))
-            airOffIn = airOffIn - 1
-            time.sleep(1)
+        print('{} : {}'.format(delay, airOffIn))
+        airOffIn = airOffIn - 1
+        time.sleep(1)
     airOffIn = -1
-    isTimerOn = False
 
 @app.route('/air', methods=['POST'])
 def air():
