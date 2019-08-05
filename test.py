@@ -68,6 +68,8 @@ def setTemp(gotJson):
 
 def startTimer(delay):
     global airOffIn
+    global t_stop
+    global t
     availLi = ['3초', '1분', '30분', '1시간 30분','2시간','2시간 30분','3시간','3시간 30분','4시간','4시간 30분','5시간']
     if delay not in availLi :
         return "예약 가능한 시간이 아닙니다."
@@ -95,6 +97,7 @@ def startTimer(delay):
         elif delay == '5시간':
             airOffIn = (5 * 60 * 60)
         t_stop.set()
+        t.start()
         return "{}뒤에 에어컨을 끕니다.".format(delay)
 
 def myTimer(stop_event):
@@ -116,7 +119,6 @@ def air():
 
 t_stop = threading.Event()
 t = threading.Thread(target=myTimer, args=(t_stop, ))
-t.start()
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5093)
