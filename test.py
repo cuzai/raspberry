@@ -119,7 +119,7 @@ def myTimer(delay):
 
     for i in range(timer):
         if isTimerOn == True:
-            print(timer)
+            print(delay, timer)
             timer = timer - 1
             time.sleep(1)
     timer = -1
