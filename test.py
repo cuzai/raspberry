@@ -74,7 +74,7 @@ def startTimer(delay):
     # elif airOffIn > 0 :
     #     return "이미 예약이 되어 있습니다. 다시 예약하려면 에어컨을 음성으로 껐다가 켜주세요"
     else :
-        airOffIn = 0
+        airOffIn = -1
         time.sleep(1)
         if delay == '3초':
             airOffIn = 3
@@ -112,6 +112,8 @@ def myTimer(delay):
         if airOffIn == 0 :
             get_temp('off', 1)
             print('air should be off')
+            break
+        elif airOffIn == -1 :
             break
 
 @app.route('/air', methods=['POST'])
