@@ -118,7 +118,7 @@ def myTimer(delay):
         airOffIn = (5 * 60 * 60)
 
     for i in range(airOffIn):
-        if stopTimer == True :
+        if stopTimer == False :
             print('{} : {}'.format(delay, airOffIn))
             airOffIn = airOffIn - 1
             time.sleep(1)
