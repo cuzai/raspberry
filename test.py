@@ -82,7 +82,7 @@ def startTimer(delay):
     isTimerOn = True
     t = threading.Thread(target=myTimer, args=(delay,))
     t.start()
-    return "{}뒤에 에어컨을 끕니다.".format(delay)
+    return "{}뒤에 에어컨을 끕니다.".format(delay.encode('utf-8'))
 
 
 def myTimer(delay):
