@@ -119,7 +119,7 @@ def myTimer(delay):
 
     for i in range(airOffIn):
         if isTimerOn == True:
-            print(delay.encode('utf-8'), airOffIn)
+            print(delay.encode('utf-8') + '' + airOffIn)
             airOffIn = airOffIn - 1
             time.sleep(1)
     airOffIn = -1
