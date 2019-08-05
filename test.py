@@ -92,6 +92,7 @@ def startTimer(delay):
 
 def myTimer(delay):
     global airOffIn
+    global stopTimer
     delay = delay.encode('utf-8')
     if delay == '3초':
         airOffIn = 3
