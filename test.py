@@ -101,6 +101,7 @@ def startTimer(delay):
         return "{}뒤에 에어컨을 끕니다.".format(delay)
 
 def myTimer(stop_event):
+    print('in Thread')
     global airOffIn
     global delay
     for i in range(airOffIn):
