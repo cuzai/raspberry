@@ -108,7 +108,7 @@ def myTimer(stop_event):
         while not stop_event.is_set() :
             print('{} : {}'.format(delay, airOffIn))
             airOffIn = airOffIn - 1
-            stop_event.wait(1)
+            stop_event.wait(timeout=1)
             if airOffIn == 0 :
                 get_temp('off', 1)
                 print('air should be off')
