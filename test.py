@@ -98,6 +98,7 @@ def startTimer(delay):
             airOffIn = (5 * 60 * 60)
         t_stop.set()
         t = threading.Thread(target=myTimer, args=(1, t_stop))
+        print(t_stop.isSet())
         t.start()
         return "{}뒤에 에어컨을 끕니다.".format(delay)
 
