@@ -74,6 +74,8 @@ def startTimer(delay):
     if delay not in availLi :
         return "예약 가능한 시간이 아닙니다."
     else :
+        t_stop.set()
+        airOffIn = 0
         if delay == '3초':
             airOffIn = 3
         elif delay == '1분':
@@ -96,7 +98,6 @@ def startTimer(delay):
             airOffIn = (4 * 60 * 60) + (30 * 60)
         elif delay == '5시간':
             airOffIn = (5 * 60 * 60)
-        t_stop.set()
         t = threading.Thread(target=myTimer, args=(1, t_stop))
         t_stop.clear()
         t.start()
