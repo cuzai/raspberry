@@ -100,7 +100,7 @@ def startTimer(delay):
         t.start()
         return "{}뒤에 에어컨을 끕니다.".format(delay)
 
-def myTimer(stop_event):
+def myTimer(arg1, stop_event):
     print('in Thread')
     global airOffIn
     global delay
@@ -119,7 +119,7 @@ def air():
     return make_response(jsonify({'fulfillmentText': response}))
 
 t_stop = threading.Event()
-t = threading.Thread(target=myTimer, args=(t_stop, ))
+t = threading.Thread(target=myTimer, args=(1, t_stop))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5093)
