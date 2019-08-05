@@ -73,8 +73,9 @@ def startTimer(delay):
     availLi = ['3초', '1분', '30분', '1시간 30분','2시간','2시간 30분','3시간','3시간 30분','4시간','4시간 30분','5시간']
     if delay not in availLi :
         return "예약 가능한 시간이 아닙니다."
+    elif airOffIn > 0 :
+        return "이미 예약이 되어 있습니다. 다시 예약하려면 에어컨을 음성으로 껐다가 켜주세요"
     else :
-        t_stop.set()
         airOffIn = 0
         if delay == '3초':
             airOffIn = 3
@@ -98,31 +99,27 @@ def startTimer(delay):
             airOffIn = (4 * 60 * 60) + (30 * 60)
         elif delay == '5시간':
             airOffIn = (5 * 60 * 60)
-        t = threading.Thread(target=myTimer, args=(1, t_stop))
-        t_stop.clear()
+        t = threading.Thread(target=myTimer)
         t.start()
         return "{}뒤에 에어컨을 끕니다.".format(delay)
 
-def myTimer(arg1, stop_event):
+def myTimer():
     global airOffIn
     global delay
     print('in Thread', airOffIn)
     for i in range(airOffIn):
-        while not stop_event.is_set() :
+        while True:
             print('{} : {}'.format(delay, airOffIn))
             airOffIn = airOffIn - 1
-            stop_event.wait(timeout=1)
             if airOffIn == 0 :
                 get_temp('off', 1)
                 print('air should be off')
+                break
 
 @app.route('/air', methods=['POST'])
 def air():
     response = results()
     return make_response(jsonify({'fulfillmentText': response}))
-
-t_stop = threading.Event()
-t = threading.Thread(target=myTimer, args=(1, t_stop))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5093)
