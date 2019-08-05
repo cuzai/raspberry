@@ -70,9 +70,9 @@ def startTimer(delay):
     if delay.encode('utf-8') not in availLi :
         return "예약 가능한 시간이 아닙니다."
     else :
+        t_stop.set()
         t_stop = threading.Event()
         t = threading.Thread(target=myTimer, args=(delay, t_stop))
-        t_stop.set()
         t.start()
         return "{}뒤에 에어컨을 끕니다.".format(delay.encode('utf-8'))
 
@@ -103,8 +103,7 @@ def myTimer(delay, stop_event):
     elif delay == '5시간':
         airOffIn = (5 * 60 * 60)
 
-    myRange = airOffIn
-    for i in range(myRange):
+    for i in range(airOffIn):
         while not stop_event.is_set() :
             print('{} : {}'.format(delay, airOffIn))
             airOffIn = airOffIn - 1
