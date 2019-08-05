@@ -93,6 +93,24 @@ def myTimer(delay):
         timer = 3
     elif delay == '1분':
         timer = 1 * 60
+    elif delay == '30분' :
+        timer = 30 * 60
+    elif delay == '1시간 30분':
+        timer = (1 * 60 * 60) + (30 * 60)
+    elif delay == '2시간':
+        timer = (2 * 60 * 60)
+    elif delay == '2시간 30분':
+        timer = (2 * 60 * 60) + (30 * 60)
+    elif delay == '3시간':
+        timer = (3 * 60 * 60)
+    elif delay == '3시간 30분':
+        timer = (3 * 60 * 60) + (30 * 60)
+    elif delay == '4시간':
+        timer = (4 * 60 * 60)
+    elif delay == '4시간 30분':
+        timer = (4 * 60 * 60) + (30 * 60)
+    elif delay == '5시간':
+        timer = (5 * 60 * 60)
 
     for i in range(timer):
         if isTimerOn == True:
@@ -100,23 +118,6 @@ def myTimer(delay):
             timer = timer - 1
             time.sleep(1)
     timer = -1
-
-
-"""    if time == '30분'
-    elif time == '3초':
-
-    elif time == '1시간'
-    elif time == '1시간 30분'
-'2시간'
-'2시간 30분'
-'3시간'
-'3시간 30분'
-'4시간'
-'4시간 30분'
-'5시간'
-'5시간 30분'
-"""
-
 
 @app.route('/air', methods=['POST'])
 def air():
