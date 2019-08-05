@@ -108,13 +108,13 @@ def myTimer():
     global delay
     print('in Thread', airOffIn)
     for i in range(airOffIn):
-        while True:
-            print('{} : {}'.format(delay, airOffIn))
-            airOffIn = airOffIn - 1
-            if airOffIn == 0 :
-                get_temp('off', 1)
-                print('air should be off')
-                break
+        print('{} : {}'.format(delay, airOffIn))
+        airOffIn = airOffIn - 1
+        time.sleep(1)
+        if airOffIn == 0 :
+            get_temp('off', 1)
+            print('air should be off')
+            break
 
 @app.route('/air', methods=['POST'])
 def air():
