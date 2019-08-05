@@ -111,6 +111,8 @@ def myTimer(delay):
         timer = (4 * 60 * 60) + (30 * 60)
     elif delay == '5시간':
         timer = (5 * 60 * 60)
+    else :
+        return '예약 설정을 취소합니다.'
 
     for i in range(timer):
         if isTimerOn == True:
