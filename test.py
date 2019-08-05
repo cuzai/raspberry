@@ -80,13 +80,13 @@ def setTemp(gotJson):
 def startTimer(delay):
     global  isTimerOn
     isTimerOn = False
-    isTimerOn = True
     t = threading.Thread(target=myTimer, args=(delay,))
     t.start()
     availLi = ['3초', '1분', '30분', '1시간 30분','2시간','2시간 30분','3시간','3시간 30분','4시간','4시간 30분','5시간']
     if delay.encode('utf-8') not in availLi :
         return "예약 가능한 시간이 아닙니다."
     else :
+        isTimerOn = True
         return "{}뒤에 에어컨을 끕니다.".format(delay.encode('utf-8'))
 
 
@@ -119,7 +119,7 @@ def myTimer(delay):
 
     for i in range(timer):
         if isTimerOn == True:
-            print(delay, timer)
+            print(delay.encode('utf-8'), timer)
             timer = timer - 1
             time.sleep(1)
     timer = -1
