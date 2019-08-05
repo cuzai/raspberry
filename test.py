@@ -73,8 +73,8 @@ def startTimer(delay):
     availLi = ['3초', '1분', '30분', '1시간 30분','2시간','2시간 30분','3시간','3시간 30분','4시간','4시간 30분','5시간']
     if delay not in availLi :
         return "예약 가능한 시간이 아닙니다."
-    elif airOffIn > 0 :
-        return "이미 예약이 되어 있습니다. 다시 예약하려면 에어컨을 음성으로 껐다가 켜주세요"
+    # elif airOffIn > 0 :
+    #     return "이미 예약이 되어 있습니다. 다시 예약하려면 에어컨을 음성으로 껐다가 켜주세요"
     else :
         airOffIn = 0
         if delay == '3초':
