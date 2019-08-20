@@ -35,16 +35,16 @@ def setTemp(gotJson):
         if gotJson.get('onOff') == 'on':
             cur_temp = 26
             fan = 1
-            response = "네, 에어컨을 기본 설정인 {}도, 바람 세기 {}로 켭니다옹".format(cur_temp, fan)
+            response = "네, 에어컨을 기본 설정인 {}도, 바람 세기 {}로 켭니다".format(cur_temp, fan)
         else:
             cur_temp = 'off'
             airOffIn = 0
-            response = "에어컨을 끕니다옹"
+            response = "에어컨을 끕니다"
     elif gotJson.get('curTemp') != '' and gotJson.get('curTemp') != None:
         if cur_temp == 'off':
             response = "현재 에어컨이 꺼져 있습니다."
         else:
-            response = "현재 에어컨은 {}도, 바렘 세기 {}로 세팅되어 있습니다옹".format(cur_temp, fan)
+            response = "현재 에어컨은 {}도, 바렘 세기 {}로 세팅되어 있습니다".format(cur_temp, fan)
         return response
     else:
         if gotJson.get('myTemp') != "" and gotJson.get('myTemp') != None:
@@ -54,7 +54,7 @@ def setTemp(gotJson):
             got_fan = gotJson.get('fan')
             fan = int(got_fan)
 
-        response = "네 에어컨을 {}도, 바람 세기 {}로 설정했다옹".format(cur_temp, fan)
+        response = "네 에어컨을 {}도, 바람 세기 {}로 설정했다".format(cur_temp, fan)
         get_temp(cur_temp, fan)
         return response
 
